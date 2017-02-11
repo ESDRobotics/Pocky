@@ -1,2 +1,2 @@
-# Lego1
-Repo for programs for Lego1 robot.
+# Hummus - AKA Bovine Destroyer
+Repo for programs for Hummus.

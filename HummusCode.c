@@ -4,9 +4,12 @@
 #define AuxMotor 2
 #define forwards 1
 #define backwards -1
+#define left -1
+#define right 1
 
 void Drive(int direction, int speed);
 void DriveTime(int direction, int speed, int time);
+void TurnRearPowered(int time);
 
 int main()
 {
@@ -23,4 +26,9 @@ void DriveTime(int direction, int speed, int time){
     Drive(direction, speed);
     msleep(time);
     ao();
+}
+void TurnRearPowered(int time, int direction){
+	motor(LeftMotor,speed*direction);
+	motor(RightMotor,speed*direction);
+    motor(AuxMotor, speed); 
 }

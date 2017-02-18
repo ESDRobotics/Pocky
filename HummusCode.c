@@ -15,33 +15,25 @@
 
 int main()
 {
-    /*clawOpen();
-    armLower();
-    clawGrab(bot);
-    armRaise();
-    clawOpen();
-    armLower();
-    basketDump();
-    
     enable_servos();
     armRaise();
-    clawOpen();
+    clawGrab(cow);
     //void driveTime(100,1500,-1)
     driveTime(100,8000,1);
     turnRight(100,3800);
-    driveTime(100,2000,1);
+    driveTime(100,3000,-1);
     driveTime(100,800,1);
-    //turnRight(100,11400);
-    turnLeft(100,3800);
+    turnRight(100,11400);
+    //turnLeft(100,3800);
     ao();
-    driveTime(100,2000,1);
+    driveTime(100,3000,1);
     clawOpen();
 	armLower();
-    clawGrab(cow);*/
+    clawGrab(cow);
     
-    //driveTime(100,7000,1);
+    //driveTime(100,8000,1);
     //msleep(1000);
-    driveTime(100,10000,-1);
+    //driveTime(100,8000,-1);
     ao();
     
     

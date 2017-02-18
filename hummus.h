@@ -6,8 +6,8 @@
 #define Forwards 1
 #define Backwards -1
 #define f_r_motor_factor 1.0
-#define f_l_motor_factor 0.98
-#define b_r_motor_factor 1.0
+#define f_l_motor_factor 0.80
+#define b_r_motor_factor 0.70
 #define b_l_motor_factor 1.0
 //************servos*********
 #define slow  50
@@ -51,7 +51,7 @@ void drive(int speed){
     motor(AuxMotor, speed);   
 }
 void driveBackward(int speed){
-    motor(LeftMotor, -(speed*b_r_motor_factor));
+    motor(LeftMotor, -(speed*b_l_motor_factor));
     motor(RightMotor, -(speed*b_r_motor_factor));
     motor(AuxMotor, -speed);   
 }

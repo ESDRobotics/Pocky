@@ -1,27 +1,38 @@
 #include <kipr/botball.h>
-#define LeftMotor 0
-#define RightMotor 1
-#define AuxMotor 2
-#define forwards 1
-#define backwards -1
-
-void Drive(int direction, int speed);
-void DriveTime(int direction, int speed, int time);
+#include <hummus.h>
+// THINGS THAT ARE AVLIBLE TO YOU
+// drive(int speed);
+// driveTime(int speed, int time);
+// turnRight(int speed, int time);
+// turnLeft(int speed, int time);
+// move_servo(int port, int position, int speed);
+// basketDump();
+// armLower();
+// armRaise();
+// clawGrab(int closeTo); // pass in either bot or cow
+// clawOpen();
 
 int main()
 {
-    DriveTime(Forwards, 100, 6000);
-    return 0;
-}
-
-void Drive(int direction, int speed){
-    motor(LeftMotor,speed);
-	motor(RightMotor,speed);
-    motor(AuxMotor, speed);   
-}
-void DriveTime(int direction, int speed, int time){
-    Drive(direction, speed);
-    msleep(time);
+    /*clawOpen();
+    armLower();
+    clawGrab(bot);
+    armRaise();
+    clawOpen();
+    armLower();
+    basketDump();
+    */
+    Drive(-100);
+    msleep(1000);
+    ao();
+    Drive(100);
+    msleep(8000);
+    ao();
+    turnLeft(100,3900);
+    ao();
+    Drive(-100);
+    msleep(1400);
     ao();
     
+    return 0;
 }

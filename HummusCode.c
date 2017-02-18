@@ -2,7 +2,8 @@
 #include <hummus.h>
 // THINGS THAT ARE AVLIBLE TO YOU
 // drive(int speed);
-// driveTime(int speed, int time);
+// void driveBackward(int speed);
+// void driveTime(int speed, int time, int direction);
 // turnRight(int speed, int time);
 // turnLeft(int speed, int time);
 // move_servo(int port, int position, int speed);
@@ -21,18 +22,30 @@ int main()
     clawOpen();
     armLower();
     basketDump();
-    */
-    Drive(-100);
-    msleep(1000);
+    
+    enable_servos();
+    armRaise();
+    clawOpen();
+    //void driveTime(100,1500,-1)
+    driveTime(100,8000,1);
+    turnRight(100,3800);
+    driveTime(100,2000,1);
+    driveTime(100,800,1);
+    //turnRight(100,11400);
+    turnLeft(100,3800);
     ao();
-    Drive(100);
-    msleep(8000);
+    driveTime(100,2000,1);
+    clawOpen();
+	armLower();
+    clawGrab(cow);*/
+    
+    //driveTime(100,7000,1);
+    //msleep(1000);
+    driveTime(100,10000,-1);
     ao();
-    turnLeft(100,3900);
-    ao();
-    Drive(-100);
-    msleep(1400);
-    ao();
+    
+    
+    
     
     return 0;
 }

@@ -5,8 +5,10 @@
 #define AuxMotor 2
 #define Forwards 1
 #define Backwards -1
-#define r_motor_factor 88
-#define l_motor_factor 100
+#define f_r_motor_factor 1.0
+#define f_l_motor_factor 0.98
+#define b_r_motor_factor 1.0
+#define b_l_motor_factor 1.0
 //************servos*********
 #define slow  50
 #define medium  10
@@ -27,8 +29,9 @@
  #define bot  1680
  #define cow  1510
 
-void Drive(int speed);
-void DriveTime(int speed, int time);
+void drive(int speed);
+void driveBackward(int speed);
+void driveTime(int speed, int time, int direction);
 void turnRight(int speed, int time);
 void turnLeft(int speed, int time);
 void move_servo(int port, int position, int speed);
@@ -42,25 +45,33 @@ void clawOpen();
 //***************************************SAD_(REEEEEEEEE)***************************************
 
 
-void Drive(int speed){
-    motor(LeftMotor, (l_motor_factor*speed/100));
-    motor(RightMotor, (r_motor_factor*speed/100));
+void drive(int speed){
+    motor(LeftMotor, (speed*f_l_motor_factor));
+    motor(RightMotor, (speed*f_r_motor_factor));
     motor(AuxMotor, speed);   
 }
-void DriveTime(int speed, int time){
-    Drive(speed);
+void driveBackward(int speed){
+    motor(LeftMotor, -(speed*b_r_motor_factor));
+    motor(RightMotor, -(speed*b_r_motor_factor));
+    motor(AuxMotor, -speed);   
+}
+void driveTime(int speed, int time, int direction){
+    if (direction==1)
+        drive(speed);
+    else if (direction==-1)
+        driveBackward(speed);
     msleep(time);
     ao();
 }
 void turnRight(int speed, int time){
-    motor(LeftMotor, -(l_motor_factor*speed/100));
-    motor(RightMotor, (r_motor_factor*speed/100));
+    motor(LeftMotor, speed);
+    motor(RightMotor, -speed);
     motor(AuxMotor,0);
     msleep(time);
 }
 void turnLeft(int speed, int time){
-    motor(LeftMotor, (l_motor_factor*speed/100));
-    motor(RightMotor, -(r_motor_factor*speed/100));
+    motor(LeftMotor, -speed);
+    motor(RightMotor, speed);
     motor(AuxMotor,0);
     msleep(time);
 }
@@ -94,8 +105,9 @@ void clawGrab(int closeTo){
     move_servo(claw, closeTo, medium);
 }
 void clawOpen(){
-    move_servo(arm, claw_open, medium);
+    move_servo(claw, claw_open, medium);
 }
+
 
 
 

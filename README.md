@@ -1,2 +1,2 @@
-# Hummus - AKA Bovine Destroyer
-Repo for programs for Hummus.
+# Hummus
+This repo contains the code for Hummus, our Lego robot for the seeding rounds.

@@ -1,6 +1,7 @@
 #include <kipr/botball.h>
 #include <hummus.h>
-// THINGS THAT ARE AVLIBLE TO YOU
+
+// THINGS THAT ARE AVALIBLE TO YOU
 // drive(int speed);
 // void driveBackward(int speed);
 // void driveTime(int speed, int time, int direction);
@@ -13,8 +14,7 @@
 // clawGrab(int closeTo); // pass in either bot or cow
 // clawOpen();
 
-int main()
-{
+int main() {
     enable_servos();
     armRaise();
     clawGrab(cow);
@@ -28,16 +28,13 @@ int main()
     ao();
     driveTime(100,3000,1);
     clawOpen();
-	armLower();
+	  armLower();
     clawGrab(cow);
     
     //driveTime(100,8000,1);
     //msleep(1000);
     //driveTime(100,8000,-1);
     ao();
-    
-    
-    
-    
+  
     return 0;
 }

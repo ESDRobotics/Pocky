@@ -1,13 +1,40 @@
 #include <kipr/botball.h>
+#include <hummus.h>
 
-//*******************************************FUCNTIONS******************************************
-//*****************************************PEPE_SAD_FROG****************************************
-//***************************************SAD_(REEEEEEEEE)***************************************
+// THINGS THAT ARE AVALIBLE TO YOU
+// drive(int speed);
+// void driveBackward(int speed);
+// void driveTime(int speed, int time, int direction);
+// turnRight(int speed, int time);
+// turnLeft(int speed, int time);
+// move_servo(int port, int position, int speed);
+// basketDump();
+// armLower();
+// armRaise();
+// clawGrab(int closeTo); // pass in either bot or cow
+// clawOpen();
 
-int main()
-{
-    DriveTime(100, 12000);
-    turnLeft(100, 1000);
-    DriveTime(100, 12000);
+int main() {
+    enable_servos();
+    armRaise();
+    clawGrab(cow);
+    //void driveTime(100,1500,-1)
+    driveTime(100,8000,1);
+    turnRight(100,3800);
+    driveTime(100,3000,-1);
+    driveTime(100,800,1);
+    turnRight(100,11400);
+    //turnLeft(100,3800);
+    ao();
+    driveTime(100,3000,1);
+    clawOpen();
+	  armLower();
+    clawGrab(cow);
+    
+    //driveTime(100,8000,1);
+    //msleep(1000);
+    //driveTime(100,8000,-1);
+    ao();
+  
     return 0;
 }

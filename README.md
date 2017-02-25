@@ -3,6 +3,7 @@ This repo contains the code for Pockey, our Lego robot for the seeding rounds. H
 
 ## Current Tasks TODO:
 Rewrite all code, this robot is used in the same round, but preforms completely different tasks than Hummus.
- - [ ] Drive Functions.
- - [ ] Effector Interface Fuctions.
+ - [x] Drive Functions.
+ - [ ] Turn Functions.
+ - [x] Effector Interface Fuctions.
  - [ ] Begin coding specific game tasks.

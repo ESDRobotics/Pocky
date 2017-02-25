@@ -1,4 +1,4 @@
-# Pockey
+# Pocky
 This repo contains the code for Pockey, our Lego robot for the seeding rounds. Hummus will be remembered.
 
 ## Current Tasks TODO:

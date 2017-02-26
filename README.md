@@ -1,6 +1,8 @@
 # Pocky
 This repo contains the code for Pocky, our Lego robot for the seeding rounds. Hummus will be remembered.
 
+[[https://github.com/ESDRobotics/Pocky/blob/master/Pocky.jpg|alt=Pocky]]
+
 ## Current Tasks TODO:
 Rewrite all code, this robot is used in the same round, but preforms completely different tasks than Hummus.
  - [x] Drive Functions.
@@ -10,8 +12,6 @@ Rewrite all code, this robot is used in the same round, but preforms completely 
   - [x] Pick up basket
   - [x] Place basket under dispenser
   - [ ] Use Dispenser
-   - [ ] Test grip turning method efficacy
   - [ ] Move basket to destination
+ - [ ] Test grip turning method efficacy
  - [ ] Fix Ski Height
-
-![alt tag](https://cdn.shopify.com/s/files/1/0241/4417/products/POCKY_Chocolate_1024x1024.png?v=1370850656)

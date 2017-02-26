@@ -1,7 +1,7 @@
 # Pocky
 This repo contains the code for Pocky, our Lego robot for the seeding rounds. Hummus will be remembered.
 
-[[https://github.com/ESDRobotics/Pocky/blob/master/Pocky.jpg|alt=Pocky]]
+![alt tag](https://raw.githubusercontent.com/ESDRobotics/Pocky/master/Pocky.jpg)
 
 ## Current Tasks TODO:
 Rewrite all code, this robot is used in the same round, but preforms completely different tasks than Hummus.

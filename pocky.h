@@ -32,8 +32,8 @@ void drive_distance(int speed, int distance, int direction) {
     /* LOGGING PURPOSES:
     printf("I need to go: %d, but I have only gone %f!\n", tick_distance, fabs(get_motor_position_counter(left_motor)));
     //*/
-		motor (left_motor, (int)(speed*direction*l_motor_factor));
-		motor (right_motor, (int)(speed*direction));
+		motor(left_motor, (int)(speed*direction*l_motor_factor));
+		motor(right_motor, (int)(speed*direction));
 	}
 	msleep(0);
   ao();
@@ -47,18 +47,20 @@ void rotate_grip(int speed, int time, int dir) {
   msleep(250);
 }
 
-// TODO RECURSION!
+// PEOPLE TOLD ME I WAS INSANE WHEN I VOWED TO IMPLEMENT RECURSION
+// NOW THEY'll SEE! THEY'll ALL SEE! AHAHAAHAHAHAHHAHAHAA
 void move_servo(int port, int desired_pos, int speed) {
-  int pos;
-  for(pos = get_servo_position(port); pos > desired_pos; pos -= 10) {
-     set_servo_position(port,pos);
+  int actual_pos = get_servo_position(port);
+  if(actual_pos/10 > desired_pos/10) {
+     set_servo_position(port, actual_pos-10);
      msleep(speed);
+     move_servo(port, desired_pos, speed);
   }
-  for(pos = get_servo_position(port); pos < desired_pos; pos += 10) {
-     set_servo_position(port,pos);
+  if(actual_pos/10 < desired_pos/10) {
+     set_servo_position(port, actual_pos+10);
      msleep(speed);
+     move_servo(port, desired_pos, speed);
   }
-  msleep(250);
 }
 
 void pitchfork(int position, int speed) {
@@ -67,8 +69,8 @@ void pitchfork(int position, int speed) {
 }
 
 void turn(int speed, int time, int direction) {
-  motor (left_motor, -direction*speed*l_motor_factor);
-  motor (right_motor, direction*speed*r_motor_factor);
+  motor(left_motor, -direction*speed*l_motor_factor);
+  motor(right_motor, direction*speed*r_motor_factor);
   msleep(time);
   ao();
   msleep(250);

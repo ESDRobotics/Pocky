@@ -33,7 +33,7 @@ void drive_distance(int speed, int distance, int direction) {
     printf("I need to go: %d, but I have only gone %f!\n", tick_distance, fabs(get_motor_position_counter(left_motor)));
     //*/
 		motor(left_motor, (int)(speed*direction*l_motor_factor));
-		motor(right_motor, (int)(speed*direction));
+		motor(right_motor, (int)(speed*direction*r_motor_factor));
 	}
 	msleep(0);
   ao();

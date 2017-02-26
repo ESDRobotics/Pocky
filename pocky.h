@@ -52,14 +52,14 @@ void rotate_grip(int speed, int time, int dir) {
 void move_servo(int port, int desired_pos, int speed) {
   int actual_pos = get_servo_position(port);
   if(actual_pos/10 > desired_pos/10) {
-     set_servo_position(port, actual_pos-10);
-     msleep(speed);
-     move_servo(port, desired_pos, speed);
+    set_servo_position(port, actual_pos-10);
+    msleep(speed);
+    move_servo(port, desired_pos, speed);
   }
   if(actual_pos/10 < desired_pos/10) {
-     set_servo_position(port, actual_pos+10);
-     msleep(speed);
-     move_servo(port, desired_pos, speed);
+    set_servo_position(port, actual_pos+10);
+    msleep(speed);
+    move_servo(port, desired_pos, speed);
   }
 }
 

@@ -1,6 +1,4 @@
-#include <kipr/botball.h>
-#include <pocky.h>
-#include <board_functions.h>
+#include <board_functions.c>
 
 void main() {
   start_up();

@@ -1,3 +1,4 @@
+#include <kipr/botball.h>
 #include <pocky.h>
 
 /* Begin Board Functions (or more like *bored* functions, ehh? haha) */

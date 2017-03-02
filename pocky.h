@@ -49,8 +49,24 @@ void drive_distance_backend(int tick_distance) {
   }
 }
 
+void drive(int speed, int time, int direction) {
+  motor(left_motor,  direction * speed * l_motor_factor);
+  motor(right_motor, direction * speed * r_motor_factor);
+  msleep(time);
+  ao();
+  msleep(250);
+}
+
+void turn(int speed, int time, int direction) {
+  motor(left_motor, -direction * speed * l_motor_factor);
+  motor(right_motor, direction * speed * r_motor_factor);
+  msleep(time);
+  ao();
+  msleep(250);
+}
+
 void rotate_grip(int speed, int time, int dir) {
-  motor(gripper, speed*dir);
+  motor(gripper, speed * dir);
   msleep(time);
   ao();
   msleep(250);
@@ -61,12 +77,12 @@ void rotate_grip(int speed, int time, int dir) {
 void move_servo(int port, int desired_pos, int speed) {
   int actual_pos = get_servo_position(port);
   if(actual_pos/10 > desired_pos/10) {
-    set_servo_position(port, actual_pos-10);
+    set_servo_position(port, actual_pos - 10);
     msleep(speed);
     move_servo(port, desired_pos, speed);
   }
   if(actual_pos/10 < desired_pos/10) {
-    set_servo_position(port, actual_pos+10);
+    set_servo_position(port, actual_pos + 10);
     msleep(speed);
     move_servo(port, desired_pos, speed);
   }
@@ -74,13 +90,5 @@ void move_servo(int port, int desired_pos, int speed) {
 
 void pitchfork(int position, int speed) {
   move_servo(arm, position, speed);
-  msleep(250);
-}
-
-void turn(int speed, int time, int direction) {
-  motor(left_motor, -direction*speed*l_motor_factor);
-  motor(right_motor, direction*speed*r_motor_factor);
-  msleep(time);
-  ao();
   msleep(250);
 }

@@ -1,3 +1,4 @@
+#include <kipr/botball.h>
 #include <board_functions.c>
 
 void main() {

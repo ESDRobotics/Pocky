@@ -25,19 +25,28 @@
 // Grip
 #define gripper 2
 
+// MORE RECURSION, YOU CAN'T STOP ME NOW!
+// I MAY BE MAD, BUT IT WORKS SO HA!
 void drive_distance(int speed, int distance, int direction) {
-  int tick_distance = ticks_per_centimeter * distance;
-	clear_motor_position_counter(left_motor);
-	while (fabs(get_motor_position_counter(left_motor)) < tick_distance){
-    /* LOGGING PURPOSES:
-    printf("I need to go: %d, but I have only gone %f!\n", tick_distance, fabs(get_motor_position_counter(left_motor)));
-    //*/
-		motor(left_motor, (int)(speed*direction*l_motor_factor));
-		motor(right_motor, (int)(speed*direction*r_motor_factor));
-	}
-	msleep(0);
-  ao();
+  clear_motor_position_counter(left_motor);
+  clear_motor_position_counter(right_motor);
+  motor(left_motor, (int)(speed*direction*l_motor_factor));
+  motor(right_motor, (int)(speed*direction*r_motor_factor));
+  drive_distance_backend(ticks_per_centimeter * distance);
   msleep(250);
+}
+
+void drive_distance_backend(int tick_distance) {
+  //* LOGGING PURPOSES:
+  printf("I need to go: %d, but I have only gone %f!\n", tick_distance, fabs(get_motor_position_counter(left_motor)));
+  //*/
+  int avg_motor_position = (fabs(get_motor_position_counter(left_motor)) + fabs(get_motor_position_counter(right_motor))) / 2;
+  if(avg_motor_position < tick_distance) {
+    msleep(1);
+    drive_distance_backend(tick_distance);
+  } else {
+    ao();
+  }
 }
 
 void rotate_grip(int speed, int time, int dir) {

@@ -30,9 +30,12 @@
 // so it's getting changed, again
 // This is more efficient, accurate, and doesn't suck
 void drive_distance(int speed, int distance, int direction) {
-  motor(left_motor,  (speed * direction * l_motor_factor));
-  motor(right_motor, (speed * direction * r_motor_factor));
+  clear_motor_position_counter(right_motor);
+  clear_motor_position_counter(left_motor);
   while(motor_recalibration(distance)) {
+    motor(left_motor,  (speed * direction * l_motor_factor));
+    motor(right_motor, (speed * direction * r_motor_factor));
+
     //* LOGGING PURPOSES:
     printf("I need to go: %d, but I have only gone %f!\n", tick_distance, fabs(get_motor_position_counter(left_motor)));
     //*/
@@ -41,11 +44,34 @@ void drive_distance(int speed, int distance, int direction) {
   msleep(250);
 }
 
-int motor_recalibration(int distance) {
-  int avg_motor_pos = (fabs(get_motor_position_counter(left_motor)) + fabs(get_motor_position_counter(right_motor))) / 2;
+boolean motor_recalibration(int distance) {
+  int temp;
+  r_motor_dist = fabs(get_motor_position_counter(right_motor));
+  l_motor_dist =  fabs(get_motor_position_counter(left_motor));
+  if(r_motor_dist < l_motor_dist) {
+    if(r_motor_factor == 1) {
+      temp = l_motor_factor;
+      #undef l_motor_factor
+      #define l_motor_factor temp - 0.01
+    } else {
+      temp = r_motor_factor;
+      #undef r_motor_factor
+      #define r_motor_factor + 0.01
+    }
+  }
+  if(l_motor_dist < r_motor_dist) {
+    if(l_motor_factor == 1) {
+      temp = r_motor_factor;
+      #undef r_motor_factor
+      #define r_motor_factor temp - 0.01
+    } else {
+      temp = l_motor_factor;
+      #undef l_motor_factor
+      #define l_motor_factor + 0.01
+    }
+  }
+  int avg_motor_pos = (r_motor_dist + l_motor_dist) / 2;
   int tick_distance = ticks_per_centimeter * distance;
-  clear_motor_position_counter(right_motor); 
-  clear_motor_position_counter(left_motor);
   return avg_motor_pos < tick_distance;
 }
 
@@ -75,13 +101,10 @@ void move_servo(int port, int desired_pos, int speed) {
     msleep(speed);
     move_servo(port, desired_pos, speed);
   }
-  else if((actual_pos - desired_pos) < -5) {
+  if((actual_pos - desired_pos) < -5) {
     set_servo_position(port, actual_pos - increment);
     msleep(speed);
     move_servo(port, desired_pos, speed);
-  }
-  else {
-    msleep(250);
   }
 }
 

@@ -25,36 +25,28 @@
 // Grip
 #define gripper 2
 
-// MORE RECURSION, YOU CAN'T STOP ME NOW!
-// I MAY BE MAD, BUT IT WORKS SO HA!
+
+// Recursion was fun but it hurt my eyes to look at
+// so it's getting changed, again
+// This is more efficient, accurate, and doesn't suck
 void drive_distance(int speed, int distance, int direction) {
-  clear_motor_position_counter(left_motor);
-  clear_motor_position_counter(right_motor);
-  motor(left_motor, (int)(speed*direction*l_motor_factor));
-  motor(right_motor, (int)(speed*direction*r_motor_factor));
-  drive_distance_backend(ticks_per_centimeter * distance);
-  msleep(250);
-}
-
-void drive_distance_backend(int tick_distance) {
-  //* LOGGING PURPOSES:
-  printf("I need to go: %d, but I have only gone %f!\n", tick_distance, fabs(get_motor_position_counter(left_motor)));
-  //*/
-  int avg_motor_position = (fabs(get_motor_position_counter(left_motor)) + fabs(get_motor_position_counter(right_motor))) / 2;
-  if(avg_motor_position < tick_distance) {
-    msleep(1);
-    drive_distance_backend(tick_distance);
-  } else {
-    ao();
+  motor(left_motor,  (speed * direction * l_motor_factor));
+  motor(right_motor, (speed * direction * r_motor_factor));
+  while(motor_recalibration(distance)) {
+    //* LOGGING PURPOSES:
+    printf("I need to go: %d, but I have only gone %f!\n", tick_distance, fabs(get_motor_position_counter(left_motor)));
+    //*/
   }
-}
-
-void drive(int speed, int time, int direction) {
-  motor(left_motor,  direction * speed * l_motor_factor);
-  motor(right_motor, direction * speed * r_motor_factor);
-  msleep(time);
   ao();
   msleep(250);
+}
+
+int motor_recalibration(int distance) {
+  int avg_motor_pos = (fabs(get_motor_position_counter(left_motor)) + fabs(get_motor_position_counter(right_motor))) / 2;
+  int tick_distance = ticks_per_centimeter * distance;
+  clear_motor_position_counter(right_motor); 
+  clear_motor_position_counter(left_motor);
+  return avg_motor_pos < tick_distance;
 }
 
 void turn(int speed, int time, int direction) {
@@ -72,19 +64,24 @@ void rotate_grip(int speed, int time, int dir) {
   msleep(250);
 }
 
-// PEOPLE TOLD ME I WAS INSANE WHEN I VOWED TO IMPLEMENT RECURSION
-// NOW THEY'll SEE! THEY'll ALL SEE! AHAHAAHAHAHAHHAHAHAA
+// Recursion here has been retained because it should work and isn't too INSANE
+// Moves servo arm in increments of %increment% (10 by default) to within 10 units
+// Smaller increments results in smoother motion, but slower (still subject to speed modifier)
 void move_servo(int port, int desired_pos, int speed) {
+  int increment = 10;
   int actual_pos = get_servo_position(port);
-  if(actual_pos/10 > desired_pos/10) {
-    set_servo_position(port, actual_pos - 10);
+  if((desired_pos - actual_pos) > 5) {
+    set_servo_position(port, actual_pos + increment);
     msleep(speed);
     move_servo(port, desired_pos, speed);
   }
-  if(actual_pos/10 < desired_pos/10) {
-    set_servo_position(port, actual_pos + 10);
+  else if((actual_pos - desired_pos) < -5) {
+    set_servo_position(port, actual_pos - increment);
     msleep(speed);
     move_servo(port, desired_pos, speed);
+  }
+  else {
+    msleep(250);
   }
 }
 

@@ -52,6 +52,11 @@ void to_bridge() {
 
 }
 
+// TODO start this
+void celebration() {
+  
+}
+
 void shutdown() {
   msleep(3000);
   disable_servos();

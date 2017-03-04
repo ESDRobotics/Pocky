@@ -35,10 +35,12 @@ void to_dispenser() {
 // TODO finish this
 void use_dispenser() {
   drive_distance(30, 20, backwards);
-  rotate_grip(medium, 7500, forwards);
-  rotate_grip(medium, 7500, backwards);
-  rotate_grip(medium, 7500, forwards);
-  rotate_grip(medium, 7500, backwards);
+  rotate_grip(medium, 6000, forwards);
+  rotate_grip(medium, 6000, backwards);
+  rotate_grip(medium, 6000, forwards);
+  rotate_grip(medium, 6000, backwards);
+  rotate_grip(medium, 6000, forwards);
+  rotate_grip(medium, 6000, backwards);
   drive_distance(30, 20, forwards);
   turn(50,(int)(full_rotation)*.54, forwards);
   pitchfork(down, slow);

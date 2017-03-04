@@ -29,11 +29,11 @@
 // so it's getting changed, again
 // This is more efficient, accurate, and doesn't suck
 void drive_distance(int speed, int distance, int direction) {
-  clear_motor_position_counter(right_motor);
   clear_motor_position_counter(left_motor);
+  clear_motor_position_counter(right_motor);
+  motor(left_motor,  (speed * direction * l_motor_factor));
+  motor(right_motor, (speed * direction * r_motor_factor));
   while(motor_recalibration(distance)) {
-    motor(left_motor,  (speed * direction * l_motor_factor));
-    motor(right_motor, (speed * direction * r_motor_factor));
     //* LOGGING PURPOSES:
     printf("I need to go: %d, but I have only gone %f!\n", tick_distance, fabs(get_motor_position_counter(left_motor)));
     //*/

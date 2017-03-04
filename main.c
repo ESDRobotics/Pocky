@@ -1,10 +1,11 @@
 #include <kipr/botball.h>
-#include <pocky.h>
+#include <board_functions.c>
 
 void main() {
-  startup();
-  basketPickup();
-  toDispenser();
-  useDispenser();
+  start_up();
+  basket_pickup();
+  to_dispenser();
+  use_dispenser();
+  celebration();
   shutdown();
 }

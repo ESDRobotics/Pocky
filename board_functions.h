@@ -6,18 +6,23 @@ void start_up() {
   msleep(1000);
   enable_servos();
   pitchfork(up, fast);
-  rotate_grip(20, 2500, forwards);
-  rotate_grip(-20, 2500, backwards);
+  set_servo_position(wheel,get_servo_position(wheel));
+  move_servo(sled, 1750, fast);  //Optimally, we would do 432, but, in order to spite Duke, 433 is advised.
   msleep(1000);
 }
 
 void basket_pickup() {
-  drive_distance(50, 118, backwards);
-  turn(50,(int)(full_rotation)*.248, forwards);
+ 	set_servo_position(wheel,325);
+  drive_distance_awd(50, 118, backwards);
+  set_servo_position(wheel, 1090);
+  turn(50,(int)(full_rotation)*.29, forwards); //.248
+  msleep(10);
+  move_servo(sled,0,fast);
   drive_distance(35, 60, backwards);
   pitchfork(down, medium);
-  drive_distance(50, 65, forwards);
-  pitchfork(carry, medium);
+  //move_servo(sled,433,fast);
+  drive_distance(50, 67, forwards);
+  pitchfork(carry, slow);
 }
 
 void to_dispenser() {

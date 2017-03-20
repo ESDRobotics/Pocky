@@ -1,81 +1,139 @@
 #include <kipr/botball.h>
-
+void follow_line_left(int counter);
+void raise_bin();
+void up_ramp();
 int main()
 {
+    //Prep servos
+    set_servo_position(3, 1500);
+    set_servo_position(2,1800);
     enable_servos();
-    set_servo_position(2,1250);
-    while(get_servo_position(3) > 150) {
-    	set_servo_position(3, get_servo_position(3)-10);
-        printf("Moving Servo");
-        msleep(150);
+
+    // Raise claw
+    while(get_servo_position(2) > 1600) {
+    	set_servo_position(2, get_servo_position(2)-30);
+        msleep(50);
+    }
+    set_servo_position(2,1600);
+    msleep(1000);
+
+    // Lower the back wheel
+    while(get_servo_position(3) > 510) {
+    	set_servo_position(3, get_servo_position(3)-50);
+        msleep(100);
     }
     msleep(1500);
+
+    // Approach the ramp
     while(magneto_x()<-90) {
      printf("NOT GOING UP\n");
   	 motor(0,50);
    	 motor(1,50);
    	 motor(3,50);
+     msleep(20);
     }
+
+    // Drive up ramp
     msleep(250);
-    while(magneto_x()>-100){
-        printf("GOING UP\n");
-        if(analog(0)>3700){
-            motor(0,25);
-            motor(1,75);
-            motor(3,100);
-            printf("analog 0: %d\t",analog(0));
-        }
-        else if(analog(1)>3700){
-            motor(0,75);
-            motor(1,25);
-            motor(3,100);
-            printf("analog 1: %d\t",analog(1));
-        }
-        else{
-        	motor(0,100);
-        	motor(1,100);
-        	motor(3,100);
-        }
-        msleep(1000);
-    }
-    printf("NO T GOING UP");
-    set_servo_position(3,220);
-    msleep(100);
-    int count=0;
-    while(count < 80){
-        motor(0,100);
-        motor(1,100);
-        motor(3,100);
-        msleep(100);
-        count+=2;
-    }
+
+    up_ramp();
+
+  //  while(get_servo_position(2)>1313){
+  //  	set_servo_position(2,get_servo_position(2)-5);
+  //      msleep(5);
+	//}
+    set_servo_position(2,1313);
+    //We are at top
+    printf("Take it back now y'all");
+    //ao();
+    motor(0,25);
+    motor(1,50);
+    msleep(500);
+	raise_bin();
+    msleep(500);
+
+    follow_line_left(100);
+
     ao();
-    set_servo_position(3, 150);
-    msleep(5000);
-    while(get_servo_position(2)>1000){
-    	set_servo_position(2,get_servo_position(2)-5);
-        msleep(50);
-	}
-    set_servo_position(2,1000);
     msleep(2000);
-    motor(0,100);
-    motor(1,100);
-    motor(3,100);
-    msleep(5000);
+    motor(0,60);
+    motor(1,60);
+    motor(3,60);
+    msleep(1750);
     freeze(0);
     freeze(1);
     freeze(3);
-    msleep(5000);
+    msleep(50);
     while(get_servo_position(2)<1640){
         set_servo_position(2,get_servo_position(2)+5);
         msleep(50);
     }
     set_servo_position(2,1640);
     ao();
-    motor(0,-100);
-    motor(1,-100);
-    motor(3,-100);
+    motor(0,-60);
+    motor(1,-60);
+    motor(3,-60);
     msleep(1000);
     ao();
-    
+    return 1;
+
+}
+
+void follow_line_left(int counter){
+int count= 0;
+    while(count<counter){
+        if(analog(0)>3500){
+            motor(0,60);
+            motor(1,30);
+            motor(3,60);
+            msleep(10);
+            printf("Slide to the left: %d\n",analog(0));
+        }
+        else{
+        	motor(0,15);
+        	motor(1,100);
+        	motor(3,15);
+            msleep(10);
+            printf("Slide to the right: %d\n",analog(0));
+        }
+        msleep(10);
+        count++;
+    }
+}
+
+void up_ramp(){
+int count= 0;
+    while(count<575){
+        if(analog(0)>3500){
+            motor(0,60);
+            motor(1,30);
+            motor(3,60);
+            msleep(10);
+            printf("Slide to the left: %d\n",analog(0));
+        }
+        else{
+        	motor(0,15);
+        	motor(1,100);
+        	motor(3,15);
+            msleep(10);
+            printf("Slide to the right: %d\n",analog(0));
+        }
+
+        if(575 - count < 100){
+        	set_servo_position(2,get_servo_position(2)-2);
+        }
+        msleep(10);
+        count++;
+    }
+}
+
+void raise_bin(){
+motor(0,10);
+motor(1,10);
+while(get_servo_position(2)>1000){
+    	set_servo_position(2,get_servo_position(2)-5);
+        msleep(50);
+	}
+    set_servo_position(2,1000);
+ao();
 }

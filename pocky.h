@@ -17,19 +17,19 @@
 #define fast  5
 
 // Arm
-#define arm  2 //servo that lifts/lowers basket-carryig claw
-#define up 435 //positions for "arm" servo
+#define arm  2
+#define up 435
 #define carry  1250
 #define down  1859
 
 // Grip
-#define gripper 2 //the motor that turns the fertilizer handle
+#define gripper 2
 
 
 // Back Weight-bearer
-#define wheel 3 // servo that lifts/lowers the larger third wheel
-#define wheel_motor 3 //motor that drives third wheel
-#define sled 0 //servo that lifts/lowers sled thing that helps balance robot
+#define wheel 3
+#define wheel_motor 3
+#define sled 0
 
 int motor_recalibration(int distance);
 void move_servo(int port, int position, int speed);
@@ -37,7 +37,6 @@ void move_servo(int port, int position, int speed);
 // Recursion was fun but it hurt my eyes to look at
 // so it's getting changed, again
 // This is more efficient, accurate, and doesn't suck
-// method that drives the robot a certain distance, but only using two smaller wheels
 void drive_distance(int speed, int distance, int direction) {
   clear_motor_position_counter(left_motor);
   clear_motor_position_counter(right_motor);
@@ -52,7 +51,6 @@ void drive_distance(int speed, int distance, int direction) {
   msleep(250);
 }
 
-//method that uses all three wheels to drive robot
 void drive_distance_awd(int speed, int distance, int direction) {
   clear_motor_position_counter(left_motor);
   clear_motor_position_counter(right_motor);
@@ -76,7 +74,6 @@ int motor_recalibration(int distance) {
   return avg_motor_pos < tick_distance;
 }
 
-//method that turns the robot
 void turn(int speed, int time, int direction) {
   motor(left_motor, direction * speed * l_motor_factor);
   motor(right_motor, -direction * speed * r_motor_factor);
@@ -85,7 +82,6 @@ void turn(int speed, int time, int direction) {
   msleep(250);
 }
 
-//method that rotates the fertilizer handle
 void rotate_grip(int speed, int time, int dir) {
   motor(gripper, speed * dir);
   msleep(time);
@@ -93,7 +89,7 @@ void rotate_grip(int speed, int time, int dir) {
   msleep(250);
 }
 
-// changes servo positions
+// TODO: Change pls
 void move_servo(int port, int position, int speed) {
     int pos;
     for(pos = get_servo_position(port); pos > position; pos -= 10) {
@@ -107,7 +103,6 @@ void move_servo(int port, int position, int speed) {
     msleep(250);
 }
 
-//method that lifts/lowers the claw that holds basket
 void pitchfork(int position, int speed) {
     move_servo(arm, position, speed);
     msleep(250);

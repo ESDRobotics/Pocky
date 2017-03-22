@@ -6,7 +6,7 @@
 #define ticks 1317
 #define ticks_per_centimeter ticks/18
 #define r_motor_factor 1.0
-#define l_motor_factor 0.99
+#define l_motor_factor .99
 #define full_rotation 3700  // Time in miliseconds it takes to turn 360 degrees at speed 50
                             // (Super rough, but all the turn functions do what I want them to do so...
                             // expect to need to use small modifiers in usage, but *DO NOT* change this)
@@ -19,8 +19,8 @@
 // Arm
 #define arm  2 //servo that lifts/lowers basket-carryig claw
 #define up 435 //positions for "arm" servo
-#define carry  1250
-#define down  1859
+#define carry  1490
+#define down  1960
 
 // Grip
 #define gripper 2 //the motor that turns the fertilizer handle
@@ -31,7 +31,7 @@
 #define wheel_motor 3 //motor that drives third wheel
 #define sled 0 //servo that lifts/lowers sled thing that helps balance robot
 
-int motor_recalibration(int distance);
+//int motor_recalibration(int distance);
 void move_servo(int port, int position, int speed);
 
 // Recursion was fun but it hurt my eyes to look at
@@ -111,4 +111,18 @@ void move_servo(int port, int position, int speed) {
 void pitchfork(int position, int speed) {
     move_servo(arm, position, speed);
     msleep(250);
+}
+
+void drive_to_basket(int speed, int distance, int direction) {
+  clear_motor_position_counter(left_motor);
+  clear_motor_position_counter(right_motor);
+  motor(left_motor,  (speed * direction * l_motor_factor));
+  motor(right_motor, (speed * direction * .95));
+  while(motor_recalibration(distance)) {
+    //* LOGGING PURPOSES:
+    printf("I need to go: somewhere, but I have only gone %f!\n", fabs(get_motor_position_counter(left_motor)));
+    //*/
+  }
+  ao();
+  msleep(250);
 }

@@ -27,24 +27,25 @@ int main()
 {
   enable_servos();
   set_servo_position(0, 1700);
-  set_servo_position(1, 0);
+  set_servo_position(1, 2047);
   drive_cm (118);
   msleep(500);
-  tick_turn_right(89);
+  tick_turn_right(93);//used to be 89 but that was consistently too small on 6/5/17
   msleep(500);
-  drive_cm (27);
+  drive_cm (21);
   msleep(500);
   claw(70);
   msleep(500);
-  drive_cm_back (30);
+  drive_cm_back (24);
   msleep(500);
-  tick_turn_right(83);
+  tick_turn_right(81);//used to be 83 but that was consistently too much on 6/5/17
   msleep(500);
   drive_cm (75);
   msleep(500);
   align_black();
   msleep(1000);
-  tick_turn_right(87);
+  drive_cm(5);
+  tick_turn_right(87);//may be too much 6/6/17
   msleep(500);
   set_servo_position(0, 500);
   msleep(500);
@@ -52,33 +53,46 @@ int main()
   msleep(500);
   drive_cm(7);
   msleep(500);
+  set_servo_position(0, 1700);
+  msleep(500);
+  spin();
   spin();
   spin();
   spin();
   spin();
   spin();
   msleep(500);
-  drive_cm_back (75);
+  claw(72);
   msleep(500);
-  drive_cm (3);
-  msleep (500);
-  claw(70);
+  drive_cm_back_slow (65);
   msleep(500);
-  tick_turn_right(87);
+  drive_cm (5);
   msleep(500);
-  drive_cm_back (50);
+  tick_turn_right(90);//used to be 93 but that was too much on 6/6/17, new number not yet tested
   msleep(500);
-  drive_cm (30);
+  drive_cm_back_slow (50);
+  msleep(500);
+  drive_cm (28);
   msleep(500);
   set_servo_position(0, 500);
   msleep(500);
-  drive_cm_ramp (150);
+  drive_cm_ramp (152);
   msleep(500);
-  set_servo_position(0,0);
+  lower_claw(0);
+  msleep(500);
+  set_servo_position(1, 2047);
   msleep(500);
   drive_cm_ramp(30);
   msleep(500);
-  set_servo_position(0,1000);
+  set_servo_position(0,2000);
+  msleep(500);
+  drive_cm_back(5);
+  msleep(500);
+  set_servo_position(0,590);
+  msleep(500);
+  drive_cm_ramp(5);
+  msleep(500);
+  set_servo_position(0,2000);
   msleep(500);
   ao();
   /*
